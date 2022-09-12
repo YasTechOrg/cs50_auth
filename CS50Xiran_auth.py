@@ -4,7 +4,7 @@ import asyncio
 import time
 import sqlite3
 
-token = input("Copy And paste your token here")
+token = input("Enter a token: ")
 
 intents = disnake.Intents.all()
 
