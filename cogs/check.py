@@ -3,6 +3,7 @@ from disnake.ext import commands
 import asyncio
 import sqlite3
 
+# # create form 
 class MyModal(disnake.ui.Modal):
     def __init__(self) -> None:
         components = [
@@ -25,10 +26,12 @@ class MyModal(disnake.ui.Modal):
         Check = False
 
         try :
+            # check the phone number in the database
             if "phone_number" in data:
+                # check phone number in database equal to the phone number in the form 
                 if data["phone_number"] == number_input :
                     if data["Login"] == None and data["Discord_id_name"] == None and data["Discord_id"] == None:
-
+                        # success message
                         embed=disnake.Embed(color=0x14db4c)
                         embed.title = "اطلاعات شما تایید شد"
                         embed.description = f"""سلام , {data['First']} {data['Last']}
@@ -36,12 +39,13 @@ class MyModal(disnake.ui.Modal):
                         """
                         await inter.response.send_message(embed = embed, ephemeral=True)
                         # add and remove roles
+                        #  set your personal role id for add and remove 
                         Add_Role_id = inter.guild.get_role(997142096836304896)
                         Remove_role_id = inter.guild.get_role(997143448484315247)
                         await asyncio.sleep(3)
                         await inter.author.add_roles(Add_Role_id)
                         await inter.author.remove_roles(Remove_role_id)
-
+                        # connect to database
                         connect = sqlite3.connect("CS50.db")
                         db = connect.cursor()
                         db.execute(f"UPDATE account_user SET Login = 'YES', Discord_id_name = '{inter.author}', Discord_id = '{inter.author.id}' WHERE phone_number = '{number_input}'")
@@ -50,27 +54,29 @@ class MyModal(disnake.ui.Modal):
                         Check = True
 
                     else:
+                        #if if phone number is already signed up in server this message will sent for user
                         Check = True
                         embed=disnake.Embed(color=0xe00909)
                         embed.title = " از شماره مورد نظر شمااستفاده شده در صورت نیاز به پشتیبانی اطلاع دهید"
                         await inter.response.send_message(embed = embed, ephemeral=True)
-
+            # if phone number dose not exist in database this message will be sent for user
             if not Check:
                 embed=disnake.Embed(color=0xe00909)
                 embed.title = "متاسفانه مشخصات شما در لیست موجود نمیباشد لطفا به پشتیبانی اطلاع دهید"
                 await inter.response.send_message(embed = embed, ephemeral=True)
         except Exception as e:
             #error Log
+            # set your personal channel for errors 
             channel = inter.guild.get_channel(997858250106089632)
             await channel.send(e)
     # agar api moshkel bokhore ya az discord javab nayad in execute mishe
+    # if there is a problem in api or no response from discord this message will be shown
     async def on_error(self, error: Exception, inter: disnake.ModalInteraction) -> None:
         await inter.response.send_message("مشکلی پیش امده لطفا بعدا تلاش کنید", ephemeral=True)
 
 class button(disnake.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
-
 
     @disnake.ui.button(label="Authenticate", style=disnake.ButtonStyle.success)
     async def authenticate(self, button:disnake.ui.Button, inter: disnake.MessageInteraction):
@@ -83,8 +89,10 @@ class check(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        # channel lobby
+        # lobby channel 
+        # set your personal channel 
         channel = self.bot.get_channel(997144260501569599)
+        # delete last 10 message from channel 
         await channel.purge(limit = 10)
         embed=disnake.Embed(color=0x14db4c)
         embed.title = "احراز هویت شرکت کنندگان"
