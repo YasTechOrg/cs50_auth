@@ -3,7 +3,7 @@ from disnake.ext import commands
 import asyncio
 import time
 import sqlite3
-
+import sys
 token = input("Enter a token: ")
 
 intents = disnake.Intents.all()
@@ -27,4 +27,10 @@ async def ping(ctx):
         pass
 
 bot.load_extension("cogs.check")
-bot.run(token, reconnect=True)
+
+try :
+    bot.run(token, reconnect=True)
+except disnake.errors.LoginFailure:
+    print("login faild please check to correct token(app will be terminated )")
+    time.sleep(3)
+    sys.exit()
