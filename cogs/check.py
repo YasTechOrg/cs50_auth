@@ -6,6 +6,9 @@ import sqlite3
 # # create form 
 class MyModal(disnake.ui.Modal):
     def __init__(self) -> None:
+        self.add_role = 997142096836304896
+        self.remove_role = 997143448484315247
+        self.error_channel = 997858250106089632
         components = [
             disnake.ui.TextInput(
                 label="شماره تلفن خود به انگلیسی",
@@ -40,8 +43,8 @@ class MyModal(disnake.ui.Modal):
                         await inter.response.send_message(embed = embed, ephemeral=True)
                         # add and remove roles
                         #  set your personal role id for add and remove 
-                        Add_Role_id = inter.guild.get_role(997142096836304896)
-                        Remove_role_id = inter.guild.get_role(997143448484315247)
+                        Add_Role_id = inter.guild.get_role(self.add_role)
+                        Remove_role_id = inter.guild.get_role(self.remove_role)
                         await asyncio.sleep(3)
                         await inter.author.add_roles(Add_Role_id)
                         await inter.author.remove_roles(Remove_role_id)
@@ -67,7 +70,7 @@ class MyModal(disnake.ui.Modal):
         except Exception as e:
             #error Log
             # set your personal channel for errors 
-            channel = inter.guild.get_channel(997858250106089632)
+            channel = inter.guild.get_channel(self.error_channel)
             await channel.send(e)
     # agar api moshkel bokhore ya az discord javab nayad in execute mishe
     # if there is a problem in api or no response from discord this message will be shown
@@ -82,16 +85,18 @@ class button(disnake.ui.View):
     async def authenticate(self, button:disnake.ui.Button, inter: disnake.MessageInteraction):
         await inter.response.send_modal(MyModal())
 
+
 class check(commands.Cog):
     def __init__(self, bot:commands.Bot):
         self.bot = bot
+        self.lobby_channel = 997144260501569599
 
 
     @commands.Cog.listener()
     async def on_ready(self):
         # lobby channel 
         # set your personal channel 
-        channel = self.bot.get_channel(997144260501569599)
+        channel = self.bot.get_channel(self.lobby_channel)
         # delete last 10 message from channel 
         await channel.purge(limit = 10)
         embed=disnake.Embed(color=0x14db4c)
