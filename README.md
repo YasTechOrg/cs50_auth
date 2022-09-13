@@ -22,9 +22,10 @@ pip install -r requirements.txt
 ## Config
 open check.py in cog folder and edit the variables below: 
 
-1. Add_Role_id
-2. Remove_role_id
-3. channel
+1. self.add_role
+2. self.remove_role
+3. self.error_channel
+4. self.lobby_channel
 
 add your data in database file(cs50.db)
 
