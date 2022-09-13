@@ -9,6 +9,7 @@ class MyModal(disnake.ui.Modal):
         self.add_role = 997142096836304896
         self.remove_role = 997143448484315247
         self.error_channel = 997858250106089632
+        self.lobby_channel = 997144260501569599
         components = [
             disnake.ui.TextInput(
                 label="شماره تلفن خود به انگلیسی",
@@ -86,12 +87,11 @@ class button(disnake.ui.View):
         await inter.response.send_modal(MyModal())
 
 
-class check(commands.Cog):
+class check(commands.Cog, MyModal):
     def __init__(self, bot:commands.Bot):
         self.bot = bot
-        self.lobby_channel = 997144260501569599
-
-
+        MyModal.__init__(self)
+        
     @commands.Cog.listener()
     async def on_ready(self):
         # lobby channel 
