@@ -1,6 +1,11 @@
 # authentication discord bot
 CS50x Iran summer authentication discord bot a simple bot script to authentication useres 
 
+## Preview
+
+![in channel](https://media.discordapp.net/attachments/995652303975632896/1019185124526538752/unknown.png)
+
+![form](https://media.discordapp.net/attachments/995652303975632896/1019185215169646634/unknown.png)
 ## Installation
 
 1. Download the Project with `git clone https://github.com/YasTechOrg/cs50_auth.git`
