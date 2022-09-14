@@ -73,8 +73,7 @@ class MyModal(disnake.ui.Modal):
             # set your personal channel for errors 
             channel = inter.guild.get_channel(self.error_channel)
             await channel.send(e)
-    # agar api moshkel bokhore ya az discord javab nayad in execute mishe
-    # if there is a problem in api or no response from discord this message will be shown
+    # if there is a problem in Discord api or no response from discord this message will be shown
     async def on_error(self, error: Exception, inter: disnake.ModalInteraction) -> None:
         await inter.response.send_message("مشکلی پیش امده لطفا بعدا تلاش کنید", ephemeral=True)
 
