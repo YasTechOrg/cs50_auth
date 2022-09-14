@@ -4,8 +4,10 @@ import asyncio
 import time
 import sqlite3
 import sys
+import os 
 
-token = input("Enter a token: ")
+token = input("Enter a token :").strip()
+os.system("cls")
 
 intents = disnake.Intents.all()
 
@@ -32,6 +34,6 @@ bot.load_extension("cogs.check")
 try :
     bot.run(token, reconnect=True)
 except disnake.errors.LoginFailure:
-    print("login faild please check to correct token(app will be terminated )")
+    print("login faild please check to correct token(app will be terminated)")
     time.sleep(3)
     sys.exit()
